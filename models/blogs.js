@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize = require('../config/connection'); //pending build connection
 
 class Blog extends Model { }
 
@@ -11,10 +11,10 @@ Blog.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        postername: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
+        // postername: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false, prob use username
+        // },
         title: {
             type: DataTypes.STRING,
         },
@@ -23,7 +23,6 @@ Blog.init(
             allowNull: false,
             defaultValue: DataTypes.NOW,
         },
-
         blog: {
 
             type: DataTypes.TEXT,
