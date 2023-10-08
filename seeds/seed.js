@@ -1,4 +1,4 @@
-const sequelize = require(''); //pending connection
+const sequelize = require('../config/connection'); //pending connection
 const { User, Blog } = require('../models');
 
 const newUserDeets = require('./users.json');
