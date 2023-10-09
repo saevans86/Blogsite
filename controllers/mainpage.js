@@ -5,18 +5,27 @@ const { Blog, User } = require('../models');
 router.get('/', async (req, res) => {
     try {
         const blogDeets = await Blog.findAll({
-            include: [
-                {
-                    model: User,
-                    attributes: ['name'],
-                },
-            ],
+            include: [{  model: User, attributes: ['name']}],
         });
+        const mapBlogs = blogDeets.map((blog) => blog.get({ plain: true }));
+        res.render('', { //todo pending handbars pages..
+            mapBlogs,
+            logged_in: req.session.logged_in
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
-        const blogs = blogDeets.map((blog) => blog.get({ plain: true }));
+router.get('/blog/:id', async (req, res) => {
+    try {
+        const blogDeetsById = await Blog.findByPk(req.params.id, {
+            include: [{  model: User, attributes: ['name']}],
+        });
+        const blogIdMap = blogDeetsById.get({ plain: true });
 
-        res.render('', { //todo pending handbars pages
-            blogs,
+        res.render('', { // todo build in page that pulls id for specific blog via handlebars
+            ...blogIdMap,
             logged_in: req.session.logged_in
         });
     } catch (err) {
