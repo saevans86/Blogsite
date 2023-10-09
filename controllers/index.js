@@ -1,6 +1,9 @@
 const router = require('express').Router();
+
 const apiRoutes = require('./api');
-const mainpageroutes = require('./mainpageroutes');
-router.unsubscribe('/', mainpageroutes);
+const mainPage = require('./mainpage'); //pending handlebars
+
+router.use('/', mainPage);
 router.use('/api', apiRoutes);
+
 module.exports = router;
