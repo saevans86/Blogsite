@@ -18,11 +18,11 @@ Blog.init(
         title: {
             type: DataTypes.STRING,
         },
-        date_created: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
+        // date_created: {
+        //     type: DataTypes.DATE,
+        //     allowNull: false,
+        //     defaultValue: DataTypes.NOW,
+        // },
         blog: {
 
             type: DataTypes.TEXT,
