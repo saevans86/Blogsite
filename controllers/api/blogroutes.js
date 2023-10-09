@@ -3,21 +3,21 @@ const { Blog, User } = require('../../models')
 //todo pending withauth
 
 router.post('/', async (req, res) => { //todo build with in post
-    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
     try {
         const newBlog = await Blog.create({
         
             ...req.body,
-            // user_id: req.session.user_id, //user routes not defined
+            user_id: req.session.user_id, 
         })
         res.status(200).json(newBlog)
     } catch (err) {
         res.status(400).json(err)
     }
 })
-
+//should not be needed since it should be included in mainpage routes with user get
 router.get('/', async (req, res) => {
-    console.log(')))))00000000000000000000000000000000000000000')
+    // console.log(')))))00000000000000000000000000000000000000000')
     try {
         const findAllBlog = await Blog.findAll({
             include: [{ model: User }]
@@ -31,11 +31,12 @@ router.get('/', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => { //todo withauth
+    // console.log('#######################################')
     try {
         const deleteBlog = await Blog.destroy({
             where: {
                 id: req.params.id,
-                user_id: req.session.user_id,
+                // user_id: req.session.user_id,
             },
         });
 
