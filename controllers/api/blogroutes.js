@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const { Blog, User } = require('../../models')
-//todo pending withauth
+const withAuth = require('../../utils/auth');
 
-router.post('/', async (req, res) => { 
+router.post('/', withAuth, async (req, res) => { 
     // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
     try {
         const newBlog = await Blog.create({
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     }
 })
 //should not be needed since it should be included in mainpage routes with user get
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
     // console.log(')))))00000000000000000000000000000000000000000')
     try {
         const findAllBlog = await Blog.findAll({
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => { //todo withauth
+router.delete('/:id', withAuth, async (req, res) => { 
     // console.log('#######################################')
     try {
         const deleteBlog = await Blog.destroy({

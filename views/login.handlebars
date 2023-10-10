@@ -1,14 +1,21 @@
 <div>
     <h2>Login</h2>
     {{!-- todo buildin loginpage --}}
-    <nav>
-    <div>
-        <button type="button" class="btn">login</button>
-    </div>
-    <div>
-        <button type="button" class="btn">signup</button>
-    </div>
-    </nav>
+<form>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp">
+   
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" id="loginPassword">
+  </div>
+  <div class="mb-3 form-check">
+
+  </div>
+  <button id='loginButton'type="submit" class="btn btn-primary">Submit</button>
+</form>
 </div>
 
-<script src="./js/login.js"></script>
+<script src="/js/login.js"></script>
