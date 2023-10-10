@@ -3,7 +3,6 @@ const { Blog, User } = require('../../models')
 const withAuth = require('../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => { 
-    // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
     try {
         const newBlog = await Blog.create({
         
@@ -17,7 +16,6 @@ router.post('/', withAuth, async (req, res) => {
 })
 //should not be needed since it should be included in mainpage routes with user get
 router.get('/', withAuth, async (req, res) => {
-    // console.log(')))))00000000000000000000000000000000000000000')
     try {
         const findAllBlog = await Blog.findAll({
             include: [{ model: User }]
