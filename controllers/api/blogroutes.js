@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Blog, User } = require('../../models')
 //todo pending withauth
 
-router.post('/', async (req, res) => { //todo build with in post
+router.post('/', async (req, res) => { 
     // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
     try {
         const newBlog = await Blog.create({
@@ -51,5 +51,7 @@ router.delete('/:id', async (req, res) => { //todo withauth
     }
 });
 
+
+// todo put route
 module.exports = router;
 
