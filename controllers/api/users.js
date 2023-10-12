@@ -11,37 +11,45 @@ router.post('/', async (req, res) => {
         
         });
     } catch (err) {
-        res.status(400).json({ error: 'Failed to register' });
+        res.status(400).json(err);
     }
 });
 
 router.post('/login', async (req, res) => {
-    console.log('ENDPOINT ############### TEST')
+    console.log('users.js ENDPOINT TEST')
     try {
-        const userDeets = await User.find({ where: { email: req.body.email } });
+        const userLogin = await User.findOne({ where: { email: req.body.email } });
 
-        if (!userDeets) {
-            return res.status(400).json({ error: 'Incorrect user info' });
+        if (!userLogin) {
+            res
+                .status(400)
+                .json({ message: 'Invalid' });
+            return;
         }
 
-        const validPassword = await userDeets.checkPassword(req.body.password);
+        const validPassword = userLogin.checkPassword(req.body.password);
 
         if (!validPassword) {
-            return res.status(400).json({ error: 'Incorrect password' });
+            res
+                .status(400)
+                .json({ message: 'Invalid' });
+            return;
         }
 
         req.session.save(() => {
-            req.session.user_id = userDeets.id;
+            req.session.user_id = userLogin.id;
             req.session.logged_in = true;
-            res.redirect('/home')
-           
+
+            res.json({ user: userLogin, message: ':)' });
         });
+
     } catch (err) {
-        res.status(400).json({ error: 'Login failed' });
+        res.status(400).json(err);
     }
 });
 
 router.post('/logout', (req, res) => {
+    console.log('users.js logout endpoint')
     if (req.session.logged_in) {
         req.session.destroy(() => {
             res.status(204).end();

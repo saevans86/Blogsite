@@ -16,6 +16,7 @@ const seedDatabase = async () => {
         await Blog.create({
             ...blog,
             user_id: newUser[Math.floor(Math.random() * newUser.length)].id,
+            //prob not needed when creating new blog on frontend
         });
     }
 

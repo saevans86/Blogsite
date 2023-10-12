@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { Blog, User } = require('../models');
 const withAuth = require('../utils/auth');
 
-
 router.get('/', withAuth, async (req, res) => {
 
 
@@ -14,24 +13,41 @@ router.get('/', withAuth, async (req, res) => {
 
 });
 
-router.get('/home', withAuth, async (req, res) => { //todo with auth
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-
+router.get('/', async (req, res) => {
     try {
-        const blogDeets = await Blog.findAll({
-        
-            where: { user_id: req.session.user_id }
+        console.log('777777777777777777777777777')
+        const blogData = await Blog.findAll({
+            include: [
+                {
+                    model: User,
+                    attributes: ['name'],
+                },
+            ],
         });
-        const blogMap = blogDeets.get({ plain: true });
 
-        const userProfile = await User.findByPk(req.session.user_id, {
-            attributes: { exclude: ['password'] },
-            include: [{ model: Blog }]
-        })
-        const profileData = userProfile.get({ plain: true });
+        const blogStuff = blogData.map((blog) => blog.get({ plain: true }));
+       
         res.render('home', {
-            ...blogMap,
-            profileData,
+            blogStuff,
+            logged_in: req.session.logged_in
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+router.get('/home', withAuth, async (req, res) => {
+    try {
+        console.log(userDeets)
+        const userDeets = await User.findByPk(req.session.user_id, {
+            attributes: { exclude: ['password'] },
+            include: [{ model: Blog }],
+        });
+
+        const user = userDeets.get({ plain: true });
+
+        res.render('home', {
+            ...user,
             logged_in: true
         });
     } catch (err) {
@@ -39,9 +55,8 @@ router.get('/home', withAuth, async (req, res) => { //todo with auth
     }
 });
 
-router.get('/blog/:id', async (req, res) => {
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
 
+router.get('/blog/:id', async (req, res) => {
     try {
         const blogDeetsById = await Blog.findByPk(req.params.id, {
             include: [{ model: User, attributes: ['name'] }],
@@ -58,13 +73,10 @@ router.get('/blog/:id', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-
-
     if (req.session.logged_in) {
         res.redirect('/home');
         return;
     }
-
     res.render('login');
 });
 

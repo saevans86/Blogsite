@@ -1,15 +1,17 @@
 {{!-- {{todo should house title, username/blog data}} --}}
 
 <div>
+<h1>Your blogs: </h1>
     <ul>
         <li>
-            {{mapBlogs}}
-            {{!-- show list of blogs by title on user's profile --}}
-            {{!-- build in add/edit/update/delete blog button to navigate to the blog partial --}}
+{{#each blogStuff as |blogStuff|}}
+            {{blogStuff}}
+                    <li><a href="\blogpage.handlebars"  id={{blogStuff.id}}>{{blogStuff.title}}</a>text test</li>
+{{/each}}
 
-              <button id='logoutButton'type="submit" class="btn btn-primary">LOGOUT</button>
-            text
+           
         </li>
     </ul>
+              <button id='logoutButton'type="submit" class="btn btn-primary">LOGOUT</button>
 </div>
 <script src="/js/logout.js"></script>
