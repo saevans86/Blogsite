@@ -1,10 +1,9 @@
+<button id='newBlog' type='submit' class='btn btn-primary'>Start New Blog</button>
 
-{{#each blogs}}
+{{#each blogs as |blog|}}
   <div class="blog">
-    {{!-- <h1>Hello {{user}}</h1> --}}
-    {{!-- <h2>{{title}}</h2>
-    <p>{{content}}</p> --}}
-		<li><a href='/blogpage/{{blog.id}}'>{{title}}</a></li>
+
+		<li><a href='/blog/{{blog.id}}'>{{title}}</a></li>
 		
   </div>
 {{/each}}
