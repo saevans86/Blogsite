@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Comment } = require('../../models');
 
 
 router.post('/', async (req, res) => {
@@ -14,6 +14,8 @@ router.post('/', async (req, res) => {
         res.status(400).json(err);
     }
 });
+
+
 
 router.post('/login', async (req, res) => {
     console.log('users.js ENDPOINT TEST')

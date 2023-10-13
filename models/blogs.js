@@ -20,7 +20,6 @@ Blog.init(
             defaultValue: DataTypes.NOW,
         },
         blog: {
-
             type: DataTypes.TEXT,
             allowNull: false,
         },
@@ -31,6 +30,7 @@ Blog.init(
                 key: 'id',
             },
         },
+
     },
     {
         sequelize,

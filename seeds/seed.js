@@ -1,9 +1,9 @@
-const sequelize = require('../config/connection'); 
+const sequelize = require('../config/connection');
 const { User, Blog, Comment } = require('../models');
 
 const newUserDeets = require('./users.json');
 const blogDeets = require('./blogs.json');
-const comments = require('./comment.json')
+const comments = require('./comment.json');
 
 const seedDatabase = async () => {
     await sequelize.sync({ force: true });
@@ -14,18 +14,19 @@ const seedDatabase = async () => {
     });
 
     for (const blog of blogDeets) {
-        await Blog.create({
+        const newBlog = await Blog.create({
             ...blog,
             user_id: newUser[Math.floor(Math.random() * newUser.length)].id,
-            //prob not needed when creating new blog on frontend
         });
 
-        for (const comment of comments) {
+        const numRandomComments = Math.floor(Math.random() * comments.length) + 1;
+        for (let i = 0; i < numRandomComments; i++) {
             await Comment.create({
-                ...comment,
-                user_id: newUser[Math.floor(Math.random() * newUser.length )].id,
-            })
-        }   
+                ...comments[Math.floor(Math.random() * comments.length)],
+                user_id: newUser[Math.floor(Math.random() * newUser.length)].id,
+                blog_id: newBlog.id,
+            });
+        }
     }
 
     process.exit(0);
