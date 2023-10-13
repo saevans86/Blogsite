@@ -31,16 +31,15 @@ router.get('/home', withAuth, async (req, res) => {
 
 
 
-router.get('/blogpage', withAuth, async (req, res) => {
+router.get('/blog/:id', withAuth, async (req, res) => {
     try {
-   console.log('PULL 1 TEST        ')
-        const blogsById = await Blog.findByPk(req.session.user_id, {
-            attributes: { exclude: ['password'] },
-            include: [{ model: User }],
+        console.log('PULL 1 TEST        ')
+        const blogsById = await Blog.findByPk(req.params.id, {
+
         });
 
         const blogIdData = blogsById.get({ plain: true });
-        console.log(blogsById)
+        console.log(blogIdData)
         res.render('blogpage', {
             ...blogIdData,
             logged_in: true
@@ -49,6 +48,24 @@ router.get('/blogpage', withAuth, async (req, res) => {
         res.status(500).json(err);
     }
 });
+router.get('/blogpage', withAuth, async (req, res) => {
+    try {
+        const pullUsers = await Blog.findByPk(req.session.user_id, req.params.id, {
+            // attributes: { exclude: ['password'] },
+            // include: [{ model: User }],
+        })
+        console.log(pullUsers)
+        const user = pullUsers.get({ plain: true });
+        res.render('blogpage', {
+            ...user,
+            logged_in: true
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
 router.get('/login', (req, res) => {
     if (req.session.logged_in) {
         res.redirect('/home');
