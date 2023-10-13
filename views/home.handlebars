@@ -1,17 +1,15 @@
-{{!-- {{todo should house title, username/blog data}} --}}
 
-<div>
-<h1>Your blogs: </h1>
-    <ul>
-        <li>
-{{#each blogStuff as |blogStuff|}}
-            {{blogStuff}}
-                    <li><a href="\blogpage.handlebars"  id={{blogStuff.id}}>{{blogStuff.title}}</a>text test</li>
+{{#each blogs}}
+  <div class="blog">
+    {{!-- <h2>{{title}}</h2>
+    <p>{{content}}</p> --}}
+		<li><a href='/blogpage/{{blog.id}}'>{{title}}</a></li>
+		
+  </div>
 {{/each}}
+<button id='logoutButton' type='submit' class='btn btn-primary'>LOGOUT</button>
+<script src='/js/logout.js'></script>
 
-           
-        </li>
-    </ul>
-              <button id='logoutButton'type="submit" class="btn btn-primary">LOGOUT</button>
-</div>
-<script src="/js/logout.js"></script>
+
+
+
