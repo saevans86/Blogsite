@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Blog, User } = require('../models');
+const { Blog, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', withAuth, async (req, res) => {
@@ -14,14 +14,15 @@ router.get('/home', withAuth, async (req, res) => {
         const blogs = await Blog.findAll({
             where: { user_id: req.session.user_id },
             attributes: { exclude: ['password'] },
-            include: [{ model: User }]
+            include: [{ model: User }],
+            include: [{ model: Comment}]
         });
         console.log(blogs);
 
         const blogData = blogs.map((blog) => blog.get({ plain: true }));
 
         res.render('home', {
-            blogs: blogData, // Pass the data as an array of objects
+            blogs: blogData,
             logged_in: true,
         });
     } catch (err) {
