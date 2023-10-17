@@ -2,18 +2,18 @@ const router = require('express').Router();
 const { User, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.get('/', withAuth, async (req, res) => {
-    try {
-        const loadComments = await Comment.findAll({
-            include: [{ model: User }]
-        });
+// router.get('/', withAuth, async (req, res) => {
+//     try {
+//         const loadComments = await Comment.findAll({
+//             include: [{ model: User }]
+//         });
 
-        res.status(200).json(loadComments);
-    } catch (err) {
+//         res.status(200).json(loadComments);
+//     } catch (err) {
 
-        res.status(500).json(err);
-    }
-});
+//         res.status(500).json(err);
+//     }
+// });
 
 
 router.post('/', async (req, res) => {
@@ -50,3 +50,5 @@ router.delete('/:id', withAuth, async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+module.exports = router;
