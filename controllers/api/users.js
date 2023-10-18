@@ -28,30 +28,33 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
+        console.log(req.body.email)
         const userLogin = await User.findOne({
-            where: { email: req.body.email },
-    
+            where: { email: req.body.email},
+            
         });
         if (!userLogin) {
             res
-                .status(400)
-                .json({ message: 'Invalid e-mail' });
+            .status(400)
+            .json({ message: 'Invalid e-mail' });
             return;
         }
-        const validPassword = await userLogin.checkPassword(req.body.password);
-        console.log(userLogin)
-        console.log(req.body.password)
+        const validPassword = userLogin.checkPassword(req.body.password);
+        // console.log(res)
+        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        console.log(validPassword)
+        // console.log(req.body.password)
         if (!validPassword) {
             res
                 .status(400)
                 .json({ message: 'Invalid password' });
             return;
-        }
-        console.log('users.js ENDPOINT TEST3')
-        req.session.save(() => {
+    }
+        
+            req.session.save(() => {
             req.session.user_id = userLogin.id;
             req.session.logged_in = true;
-            res.json({ user: userLogin, message: 'HUZZAH!!!!!!!!!!!!!!!!!!!!!!!!!!!!' });
+            res.json({ user: userLogin, message: '!!!!!!!!!!!!!!!!!!!!!!!!!!!' });
         });
     } catch (err) {
         res.status(400).json(err);
