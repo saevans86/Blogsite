@@ -1,14 +1,18 @@
 const sequelize = require('../config/connection');
 const { User, Blog, Comment } = require('../models');
+const bcrypt = require('bcrypt');
 
-const newUserDeets = require('./users.json');
+const userDeets = require('./users.json');
 const blogDeets = require('./blogs.json');
 const comments = require('./comment.json');
 
 const seedDatabase = async () => {
     await sequelize.sync({ force: true });
 
-    const newUser = await User.bulkCreate(newUserDeets);
+    for (const userPw of userDeets) {
+        userPw.password =await bcrypt.hash(userPw.password, 10)
+    }
+    const newUser = await User.bulkCreate(userDeets);
 
     for (const blog of blogDeets) {
         const newBlog = await Blog.create({
