@@ -13,16 +13,45 @@ router.get('/home', withAuth, async (req, res) => {
         console.log('PULL ALL TEST MAINPAGE.JS');
         const blogs = await Blog.findAll({
             where: { user_id: req.session.user_id },
-            attributes: { exclude: ['password'] },
-            include: [{ model: User }],
-            include: [{ model: Comment}]
+            // attributes: { exclude: ['password'] },
+            // include: [{ model: User }],
+            // include: [{ model: Comment}]
         });
-        console.log(blogs);
+        // console.log(blogs);
 
         const blogData = blogs.map((blog) => blog.get({ plain: true }));
+        const userInfo = await User.findByPk(req.session.user_id, {
+            attributes: { exclude: ['password'] },
+        
+        })
+        // console.log(userInfo)
+        const userData = userInfo.get({ plain: true });
 
         res.render('home', {
+            ...userData,
             blogs: blogData,
+           
+            logged_in: true,
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+router.get('/home', withAuth, async (req, res) => {
+    try {
+        const comments = await Comment.findAll({
+            where: { user_id: req.session.user_id },
+            // attributes: { exclude: ['password'] },
+            // include: [{ model: User }],
+            // include: [{ model: Blog}]
+        });
+        console.log(comments)
+        const Comment = comments.map((comments) => comments.get({ plain: true }));
+
+        res.render('home', {
+           comments: Comment,
+ 
             logged_in: true,
         });
     } catch (err) {
@@ -31,11 +60,11 @@ router.get('/home', withAuth, async (req, res) => {
 });
 
 
-
 router.get('/blog/:id', withAuth, async (req, res) => {
     try {
         console.log('PULL 1 TEST MAINPAGE.JS')
         const blogsById = await Blog.findByPk(req.params.id, {
+                include: [{ model: Comment }]
 
         });
 

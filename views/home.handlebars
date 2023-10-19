@@ -1,9 +1,20 @@
+<h1>Hello, {{user_name}}</h1>
 <button id='newBlog' type='submit' class='btn btn-primary'>Start New Blog</button>
 
+<div>
+  <h3>Your recent posts</h3>
+</div>
 {{#each blogs as |blog|}}
   <div class="blog">
 
-		<li><a href='/blog/{{blog.id}}'>{{title}}</a></li>
+<ul class="nav flex-column">
+
+  <li class="nav-item">
+    <a class="nav-link"  href='/blog/{{blog.id}}'>{{title}}</a>
+  </li>
+
+  </li>
+</ul>
 		
   </div>
 {{/each}}

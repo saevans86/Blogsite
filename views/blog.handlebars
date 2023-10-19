@@ -1,11 +1,24 @@
 <div>
 
-	<button id='editButton' type='submit' class='btn btn-primary'>edit</button>
-	<button id='delete' type='submit' class='btn btn-primary'>delete</button>
+<button id='editButton' type='submit' class='btn btn-primary'>edit</button>
+<button id='delete' type='submit' class='btn btn-primary'>delete</button>
+</div>
 
+<div>
 	<h1>{{title}}</h1>
 	<p>{{blog}}</p>
-
-	{{blogs}}
-
 </div>
+
+
+
+<ol class="list-group list-group-numbered">
+{{#each comments as |comments|}}
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold"{{comments.id}}>{{users_name}}</div>
+      {{comment}}
+    </div>
+  </li>
+{{/each}}
+
+</ol>
