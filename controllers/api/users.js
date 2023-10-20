@@ -14,13 +14,15 @@ router.get('/', async (req, res) => {
 
 });
 router.post('/', async (req, res) => {
+    console.log('######################################')
     try {
-        const newUserDeets = await User.create(req.body);
+        const newUser = await User.create(req.body);
         req.session.save(() => {
-            req.session.user_id = newUserDeets.id;
+            req.session.user_id = newUser.id;
             req.session.logged_in = true;
-            res.status(200).json(newUserDeets);
+            res.status(200).json(newUser);
         });
+        console.log(req)
     } catch (err) {
         res.status(400).json(err);
     }
@@ -28,7 +30,7 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        console.log(req.body.email)
+        // console.log(req.body.email)
         const userLogin = await User.findOne({
             where: { email: req.body.email},
             
@@ -40,10 +42,8 @@ router.post('/login', async (req, res) => {
             return;
         }
         const validPassword = userLogin.checkPassword(req.body.password);
-        // console.log(res)
         console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         console.log(validPassword)
-        // console.log(req.body.password)
         if (!validPassword) {
             res
                 .status(400)
