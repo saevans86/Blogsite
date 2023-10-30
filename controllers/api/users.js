@@ -2,27 +2,28 @@ const router = require('express').Router();
 const { User, Comment, Blog } = require('../../models');
 
 
-router.get('/', async (req, res) => {
-    try {
-        const getLogins = await User.findAll({
-            include: [{ model: Comment }, { model: Blog }]
-        })
-        res.status(200).json(getLogins);
-    } catch (err) {
-        res.status(500).json(err);
-    }
+// router.get('/', async (req, res) => {
+//     try {
+//         const getLogins = await User.findAll({
+//             include: [{ model: Comment }, { model: Blog }]
+//         })
+//         res.status(200).json(getLogins);
+//     } catch (err) {
+//         res.status(500).json(err);
+//     }
 
-});
+// });
 router.post('/', async (req, res) => {
-    console.log('######################################')
+    console.log('6666666666666666666666666666666666666666666666666666666');
     try {
         const newUser = await User.create(req.body);
-        req.session.save(() => {
-            req.session.user_id = newUser.id;
+   console.log(req.body);
+   
+            req.session.save(() => {
+                req.session.user_id = newUser.user_id;
             req.session.logged_in = true;
             res.status(200).json(newUser);
         });
-        console.log(req)
     } catch (err) {
         res.status(400).json(err);
     }
@@ -30,7 +31,7 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        // console.log(req.body.email)
+        console.log(req.body)
         const userLogin = await User.findOne({
             where: { email: req.body.email},
             

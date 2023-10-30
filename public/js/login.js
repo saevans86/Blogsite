@@ -1,53 +1,50 @@
 const loginFunc = async (event) => {
-    event.preventDefault();
-    let email = document.querySelector('#loginEmail').value.trim();
-    let password = document.querySelector('#loginPassword').value.trim();
-    if (email && password) {
-        console.log(password);
-        console.log(email)
-        try {
-            const response = await fetch('/api/users/login', {
-                method: 'POST',
-                body: JSON.stringify({ email, password }),
-                headers: { 'Content-type': 'application/json' },
-            });
-            console.log('response')
-            if (response.ok) {
-                document.location.replace('/home');
-            } else {
-                console.log('Error in submission');
-            }
-        } catch (error) {
-            console.error('Fetch error:', error);
-        }
-    }
-}
+	event.preventDefault();
+	let email = document.querySelector('#loginEmail').value.trim();
+	let password = document.querySelector('#loginPassword').value.trim();
+	if (email && password) {
+		// console.log(password);
+		// console.log(email);
 
-const singUpFunction = async (event) => {
-    event.preventDefault();
-
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-    const userName = document.querySelector('#userName').value.trim();
-    const newEmail = document.querySelector('#signUpEmail').value.trim();
-    const newPassword = document.querySelector('#signUpPass').value.trim();
-    if (userName && newEmail && newPassword) {
-        const response = await fetch('/api/users/', {
-            method: 'POST',
-            body: JSON.stringify({ userName, newEmail, newPassword }),
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        console.log(newEmail)
-        if (response.ok) {
-            document.location.replace('/home');
-        } else {
-            console.log('error occured')
-        }
-    }
+		const response = await fetch('/api/users/login', {
+			method: 'POST',
+			body: JSON.stringify({ email, password }),
+			headers: { 'Content-type': 'application/json' }
+		});
+		// console.log('response');
+		if (response.ok) {
+			document.location.replace('/home');
+		} else {
+			console.log('Error in submission');
+		}
+	}
 };
 
+const singUpFunction = async (event) => {
+	event.preventDefault();
 
+	console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+	const user_name = document.querySelector('#user_name').value.trim();
+	const email = document.querySelector('#email').value.trim();
+	const password = document.querySelector('#password').value.trim();
+	if (user_name && email && password) {
+	const response = await fetch('/api/users', {
+		method: 'POST',
+		body: JSON.stringify({ user_name, email, password }),
+		headers: { 'Content-type': 'application/json' }
+	});
 
-document.querySelector('#signUpButton').addEventListener('click', singUpFunction);
+		console.log({ user_name, email, password });
+		if (response.ok) {
+			document.location.replace('/home');
+		} else {
+			console.log(error);
+		}
+	}
+};
 
-document.querySelector('#loginButton').addEventListener('click', loginFunc)
+document
+	.querySelector('#signUpButton')
+	.addEventListener('click', singUpFunction);
+
+document.querySelector('#loginButton').addEventListener('click', loginFunc);

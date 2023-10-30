@@ -9,3 +9,4 @@ https://www.npmjs.com/package/dotenv
 https://www.npmjs.com/package/bcrypt
 https://www.npmjs.com/package/express-session
 https://www.npmjs.com/package/connect-session-sequelize
+https://www.npmjs.com/package/body-parser nn
