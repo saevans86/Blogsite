@@ -15,7 +15,7 @@ const loginFunc = async (event) => {
 		if (response.ok) {
 			document.location.replace('/home');
 		} else {
-			console.log('Error in submission');
+			console.log(response);
 		}
 	}
 };
@@ -36,9 +36,9 @@ const singUpFunction = async (event) => {
 
 		console.log({ user_name, email, password });
 		if (response.ok) {
-			document.location.replace('/home');
+			document.location.replace('/');
 		} else {
-			console.log(error);
+			console.log(response);
 		}
 	}
 };
